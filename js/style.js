@@ -1,71 +1,58 @@
 
-
 document.addEventListener('keyup', function (e) {
 
+      if (e.key === 'Escape') {
+            gameOver();
+      }
 
-      if (getElementInnerText('display-alphabet') === e.key) {
+      const displayAlphabet = getElementTextById('display-alphabet').toLowerCase();
 
-            let score = getElementInnerTextValue('score-count');
-            score = score + 1;
+      if (e.key === displayAlphabet) {
+            continueGame();
+            removeElementBackgroundById(displayAlphabet);
 
-            setElementInnerTextValue('score-count', score)
+            const scoreCount = getElementValueById('score-count');
+            const newScore = scoreCount + 1;
 
-            handleRandomNumber();
-            removeElementClass(e.key, 'alphabet-bg');
+            updateElementValueById('score-count', newScore);
       }
       else {
-            let life = getElementInnerTextValue('life-count');
-            life = life - 1;
+            const lifeCount = getElementValueById('life-count');
+            const newLife = lifeCount - 1;
 
-            if (life === 0) {
-                  hideSection('keyboard-section');
-                  showSection('score-section');
-                  finalScore();
+            if (newLife === 0) {
+                  gameOver();
             }
 
-            setElementInnerTextValue('life-count', life);
+            updateElementValueById('life-count', newLife);
+
       }
 })
 
-function finalScore() {
-      setElementInnerTextValue('final-score', getElementInnerText('score-count'));
-}
+function continueGame() {
+      const randomAlphabet = getRandomAlphabet();
 
-function restartGame() {
-      hideSection('score-section');
-      showSection('keyboard-section');
-
-      setElementInnerTextValue('score-count', 0)
-      setElementInnerTextValue('life-count', 5)
-      // handleRandomNumber();
-}
-
-function handleRandomNumber() {
-      const random = randomNumber();
-
-      const alphabeticString = 'abcdefghijklmnopqrstuvwxyz';
-      const alphabet_arr = alphabeticString.split('');
-
-      const random_alphabet = alphabet_arr[random];
-      const displayAlphabet = document.getElementById('display-alphabet');
-      displayAlphabet.innerText = random_alphabet;
-
-      const keyboardKey = document.getElementById(random_alphabet);
-      keyboardKey.classList.add('alphabet-bg');
+      // set background color to keyboard element
+      addElementBackgroundById(randomAlphabet);
+      updateElementValueById('display-alphabet', randomAlphabet)
 }
 
 function startGame() {
-      // option 1
-      // const homePage = document.getElementById('home-page');
-      // homePage.classList.add('hidden');
-
-      // const keyboardSection = document.getElementById('keyboard-section');
-      // keyboardSection.classList.remove('hidden');
-
-      // option 2
       hideSection('home-page');
+      hideSection('score-section');
       showSection('keyboard-section');
 
-      handleRandomNumber();
+      updateElementValueById('score-count', 0)
+      updateElementValueById('life-count', 5)
+
+      continueGame();
 };
 
+function gameOver() {
+      hideSection('keyboard-section');
+      showSection('score-section');
+
+      removeElementBackgroundById(getElementTextById('display-alphabet'));
+
+      updateElementValueById('final-score', getElementTextById('score-count'))
+}

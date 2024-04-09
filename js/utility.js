@@ -1,38 +1,42 @@
 function hideSection(sectionId) {
       const section = document.getElementById(sectionId);
       section.classList.add('hidden');
-}
+};
 
 function showSection(sectionId) {
       const section = document.getElementById(sectionId);
       section.classList.remove('hidden');
-}
+};
 
-function addElementClass(elementId, value) {
+function addElementBackgroundById(elementId) {
       const element = document.getElementById(elementId);
-      element.classList.add(value);
-}
+      element.classList.add('alphabet-bg');
+};
 
-function removeElementClass(elementId, value) {
+function removeElementBackgroundById(elementId) {
       const element = document.getElementById(elementId);
-      element.classList.remove(value);
-}
+      element.classList.remove('alphabet-bg');
+};
 
-function randomNumber() {
-      return Math.floor(Math.random() * 26);
-}
+function getElementValueById(elementId) {
+      const element = document.getElementById(elementId);
+      return parseInt(element.innerText);
+};
 
-function getElementInnerText(elementId) {
+function getElementTextById(elementId) {
       const element = document.getElementById(elementId);
       return element.innerText;
 }
 
-function getElementInnerTextValue(elementId) {
+function updateElementValueById(elementId, value) {
       const element = document.getElementById(elementId);
-      return parseFloat(element.innerText);
+      element.innerText = value;
 }
 
-function setElementInnerTextValue(elementId, value) {
-      const element = document.getElementById(elementId);
-      return element.innerText = value;
+function getRandomAlphabet() {
+      const alphabeticString = 'abcdefghijklmnopqrstuvwxyz';
+      const alphabeticArray = alphabeticString.split('');
+
+      const randomNumber = Math.floor(Math.random() * 27);
+      return alphabeticArray[randomNumber];
 }
